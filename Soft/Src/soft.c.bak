@@ -1,0 +1,69 @@
+#include "soft.h"
+
+/**********/
+//uint32_t cnti;
+
+/**********/
+
+/**********/
+void inInit(void);
+void inMain(void);
+void inTimH(void);
+void inSysT(void);
+void inSysTConfig(void);
+/**********/
+
+//Prototypes
+void inInit(void) {
+
+}
+
+void inMain(void) {
+
+}
+
+void inTimH(void) {
+
+	
+		
+}
+
+void inSysT(void) {
+	
+}
+
+void inSysTConfig(void) {
+	HAL_SYSTICK_Config(HAL_RCC_GetHCLKFreq() / 168000);
+	/**Configure the Systick 
+	 */
+	HAL_SYSTICK_CLKSourceConfig (SYSTICK_CLKSOURCE_HCLK);
+	/* SysTick_IRQn interrupt configuration */
+	HAL_NVIC_SetPriority(SysTick_IRQn, 12, 0);	
+}
+
+void checkPulse(void) {
+	if(pulse < PWM_MIN) {
+		pulse = PWM_MIN;
+	} else if(pulse > PWM_MAX) {
+			pulse = PWM_MAX;
+		}
+	
+	cmpA1 = pulse;
+	cmpA2 = 28800;
+	cmpA3 = cmpA2 + pulse;
+	cmpA4 = cmpA1 / 2;
+
+	__HAL_HRTIM_SETCOMPARE(&hhrtim1, HRTIM_TIMERINDEX_TIMER_A, HRTIM_COMPAREUNIT_1, cmpA1);
+	__HAL_HRTIM_SETCOMPARE(&hhrtim1, HRTIM_TIMERINDEX_TIMER_A, HRTIM_COMPAREUNIT_2, cmpA2);
+	__HAL_HRTIM_SETCOMPARE(&hhrtim1, HRTIM_TIMERINDEX_TIMER_A, HRTIM_COMPAREUNIT_3, cmpA3);
+	__HAL_HRTIM_SETCOMPARE(&hhrtim1, HRTIM_TIMERINDEX_TIMER_A, HRTIM_COMPAREUNIT_4, cmpA4);		
+}
+
+void inDac(void) {
+	HAL_DAC_Start(&hdac1, DAC_CHANNEL_1);
+	HAL_DAC_SetValue(&hdac1, DAC_CHANNEL_1, DAC_ALIGN_12B_R, 3200);
+}
+
+void inComp(void) {
+	HAL_COMP_Start (&hcomp2);
+}

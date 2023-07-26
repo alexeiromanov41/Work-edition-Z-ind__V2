@@ -1,0 +1,114 @@
+#ifndef SOFT_H
+#define SOFT_H
+
+/* C++ detection */
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#include "main.h"
+#include "adc.h"
+#include "comp.h"
+#include "dac.h"
+#include "hrtim.h"
+#include "gpio.h"
+
+/*defines*/
+#define U_zad 2100
+#define I_zad 11000
+#define P_zad 10000
+#define I_max_dop 15000
+#define I_max 5200
+#define U_max 2600
+#define U_min 1800
+#define I_min 4500
+#define PWM_MAX 23040
+#define PWM_MIN 48
+#define Pr_MAX 1
+#define Pr_MIN -1
+#define Ir_MAX 200
+#define Ir_MIN -200
+#define IUr_MAX 20
+#define IUr_MIN -20
+#define Dr_MAX 1
+#define Dr_MIN -1
+#define Pkf 1
+#define Ikf 200
+#define Ukf 20
+#define Dkf 1
+/********/
+
+/**********/
+extern uint32_t cnti;
+extern uint32_t inWork;
+extern uint16_t ADC_Data[2];
+extern uint16_t uOut;
+extern uint16_t iOut;
+extern uint16_t pOut;
+extern uint16_t iInv;
+extern uint8_t calcDivArr[1];
+extern uint8_t uOutDiv;
+extern uint8_t iOutDiv;
+extern uint8_t iInvDiv;
+extern int32_t pulse_1, pulse_2, pulse;
+extern uint16_t inOs;
+extern uint16_t timCnt;
+extern uint16_t inError, Err_pause;
+extern uint16_t Er_sost;
+extern uint8_t startOS;
+extern int16_t	dU;
+extern int16_t	uOutF;
+extern int16_t  dFU;
+extern int16_t	uOutF1;
+extern int16_t  uOutF2;
+extern int16_t	dI;
+extern int16_t	iOutF;
+extern int16_t  dFI;
+extern int16_t	iOutF1;
+extern int16_t  iOutF2;
+extern int16_t iOutFExp;
+extern int16_t uOutFExp;
+extern int16_t	pOutF;
+extern int16_t deltaI2, deltaI1, deltaI0;
+extern int16_t deltaU2, deltaU1, deltaU0;
+extern int16_t Pr, Ir, Dr, IUr;
+extern int16_t max_sost;
+extern int16_t pwmZero;
+extern int16_t inImax;
+extern int16_t iMax;
+extern uint8_t antiStick;
+extern int32_t cmpA1, cmpA2, cmpA3, cmpA4;
+
+/**********/
+extern void uOutCalc(void);
+extern void pOutCalc(void);
+extern void iOutCalc(void);
+extern void uOutFCalc(void);
+extern void pOutFCalc(void);
+extern void iOutFCalc(void);
+extern void iOutExpFCalc(void);
+extern void uOutExpFCalc(void);
+extern void ledOff(void);
+//extern void iInvCalc(void);
+extern void inInit(void);
+extern void inMain(void);
+extern void inTimH(void);
+extern void inSysT(void);
+extern void inSysTConfig(void);
+extern void checkPulse(void);
+extern void inDac(void);
+extern void inComp(void);
+/**********/
+
+/**********/
+
+/**********/
+
+
+
+/* C++ detection */
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* End of SOFT_H */
